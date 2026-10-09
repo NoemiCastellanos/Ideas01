@@ -6,31 +6,31 @@ class CategoriaSeeder extends Seeder
 { 
     public function run(): void 
     { 
-        Categoria::create([ 
+        Categoria::FirstOrCreate([ 
             'nombre' => 'Tecnología', 
             'descripcion' => 'Ideas relacionadas con tecnología y 
             software.' 
         ]); 
 
-        Categoria::create([ 
+        Categoria::FirstOrCreate([ 
             'nombre' => 'Educación', 
             'descripcion' => 'Ideas relacionadas con educación y 
             aprendizaje.' 
         ]); 
 
-        Categoria::create([ 
+        Categoria::FirstOrCreate([ 
             'nombre' => 'Salud', 
             'descripcion' => 'Ideas relacionadas con salud y 
             bienestar.' 
         ]); 
 
-        Categoria::create([ 
+        Categoria::FirstOrCreate([ 
             'nombre' => 'Medio ambiente', 
             'descripcion' => 'Ideas relacionadas con el cuidado 
             del medio ambiente.' 
         ]); 
 
-        categoria::create([
+        categoria::FirstOrCreate([
             'nombre' => 'Pasatiempos',
             'descripcion' => 'Ideas relacionadas con entretenimiento
             y actividades recreativas'
