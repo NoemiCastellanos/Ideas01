@@ -13,8 +13,13 @@ class CategoriaForm
         return $schema
             ->components([
                 TextInput::make('nombre')
+                    ->label('Nombre de la categoría')
+                    ->helperText('Ingresa el nombre de la categoría')
+                    ->placeholder('Ej. Alimentos')
                     ->required(),
                 Textarea::make('descripcion')
+                    ->label('Descripción')
+                    ->helperText('Ingresa una descripción de lo que abarca la categoría')
                     ->required()
                     ->columnSpanFull(),
             ]);
