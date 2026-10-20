@@ -19,9 +19,11 @@ class IdeaInfolist
                 TextEntry::make('categoria.id')
                     ->label('Categoria'),
                 TextEntry::make('created_at')
+                    ->label('Creada el')
                     ->dateTime()
                     ->placeholder('-'),
                 TextEntry::make('updated_at')
+                    ->label('Actualizada el')
                     ->dateTime()
                     ->placeholder('-'),
             ]);
