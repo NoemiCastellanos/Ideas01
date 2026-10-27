@@ -16,6 +16,10 @@ class CategoriaForm
                     ->label('Nombre de la categoría')
                     ->helperText('Ingresa el nombre de la categoría')
                     ->placeholder('Ej. Alimentos')
+                    ->unique()
+                    ->validationMessages([
+                          'unique'=> 'Ya existe una categoría con este título',
+                    ])
                     ->required(),
                 Textarea::make('descripcion')
                     ->label('Descripción')

@@ -6,6 +6,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
 
 class IdeaForm
 {
@@ -17,6 +18,10 @@ class IdeaForm
                     ->label ('Título de la idea')
                     ->helperText('Escribre un título que sea ilustrativo y breve')
                     ->placeholder('Ej. Aplicación de comida')
+                    ->unique()
+                    ->validationMessages([
+                          'unique'=> 'Ya existe una idea con este título',
+                    ])
                     ->required(),
 
                 Textarea::make('descripcion')
@@ -24,6 +29,13 @@ class IdeaForm
                     ->helperText('Describe a detalle en que consiste la idea del proyecto')
                     ->required()
                     ->columnSpanFull(),
+
+                TextInput::make('autor')
+                    ->required(),
+
+                Select::make('categoria_id')
+                    ->relationship('categoria', 'nombre')
+                    ->required(),
 
                 Select::make('estado')
                     ->required()
@@ -33,13 +45,15 @@ class IdeaForm
                         'aprobada' => 'Aprobada',
                         'rechazada' => 'Rechazada'
                     ])
-                    ->default('registrada'),
-
-                TextInput::make('autor')
-                    ->required(),
-
-                Select::make('categoria_id')
-                    ->relationship('categoria', 'nombre')
+                    ->default('registrada')
+                    ->hiddenOn('create')
+                    ->live(),
+                Textarea::make('Observacion')
+                    ->label('Motivo de rechazo')
+                    ->visible(fn(Get $get) => 
+                        $get('estado') === 'rechazada'
+                    )
+                    ->maxLength(200)
                     ->required(),
             ]);
     }

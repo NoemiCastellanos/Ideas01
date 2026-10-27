@@ -17,8 +17,9 @@ use Filament\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Idea;
-use Filament\Notifications\Notification; // Asegúrate de usar 'Notifications' en plural
-use Filament\Forms\Components\Textarea; // <-- Importante para el campo de texto del modal
+use Filament\Notifications\Notification;
+use Filament\Forms\Components\Textarea;
+use Filament\Support\Icons\Heroicon;
 
 class IdeasTable
 {
@@ -89,13 +90,17 @@ class IdeasTable
                 ForceDeleteAction::make(),
 
                 Action::make('aprobar')
-                    ->label('Aprobar')
+                    ->label('批准')
+                    ->icon(Heroicon::HandThumbUp)
                     ->color('success')
                     ->requiresConfirmation()
                     ->modalHeading('Aprobar')
                     ->modalDescription('¿Deseas aprobar esta idea?')
                     ->action(function (Idea $record) {
-                        $record->update(['estado' => 'aprobada']);
+                        $record->update([
+                            'estado' => 'aprobada',
+                            'observacion' => null,
+                        ]);
 
                         Notification::make()
                             ->title('Idea aprobada correctamente')
@@ -106,6 +111,7 @@ class IdeasTable
 
                 Action::make('rechazar')
                     ->label('Rechazar')
+                    ->icon(Heroicon::HandThumbDown)
                     ->color('danger')
                     ->requiresConfirmation()
                     ->modalHeading('Rechazar idea')
@@ -114,6 +120,7 @@ class IdeasTable
                         Textarea::make('observacion')
                             ->label('Motivo del rechazo')
                             ->required()
+                            ->maxLength(200),
                     ])
                     ->action(function (Idea $record, array $data) {
                         $record->update([
@@ -128,6 +135,8 @@ class IdeasTable
                     })
                     ->visible(fn(Idea $record) => $record->estado != 'rechazada'),
             ])
+            ->recordAction(null)
+            ->recordUrl(null)
             ->toolbarActions([
                 BulkActionGroup::make([
                     //DeleteBulkAction::make(),
