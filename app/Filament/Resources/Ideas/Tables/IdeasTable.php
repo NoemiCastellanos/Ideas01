@@ -90,6 +90,7 @@ class IdeasTable
                 ForceDeleteAction::make(),
 
                 Action::make('aprobar')
+                ->authorize('cambiarEstado')
                     ->label('批准')
                     ->icon(Heroicon::HandThumbUp)
                     ->color('success')
@@ -110,6 +111,7 @@ class IdeasTable
                     ->visible(fn(Idea $record) => $record->estado != 'aprobada'),
 
                 Action::make('rechazar')
+                    ->authorize('cambiarEstado')
                     ->label('Rechazar')
                     ->icon(Heroicon::HandThumbDown)
                     ->color('danger')

@@ -47,6 +47,7 @@ class IdeaForm
                     ])
                     ->default('registrada')
                     ->hiddenOn('create')
+                    ->disabled(fn()=> auth()->user()->rol !== 'admin' || auth()->user()->rol !== 'coordinador')
                     ->live(),
                 Textarea::make('Observacion')
                     ->label('Motivo de rechazo')
